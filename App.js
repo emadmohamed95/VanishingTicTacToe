@@ -8,6 +8,7 @@
 
 import React, { useEffect, useState } from 'react';
 import {
+  Platform,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -24,11 +25,14 @@ import Home from './src/screens/Home/Home';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Settings from './src/screens/Settings/Settings';
-import mobileAds from 'react-native-google-mobile-ads';
+import mobileAds, { AdsConsentStatus } from 'react-native-google-mobile-ads';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
+import aps from './app.json'
 
-const adUnitId = TestIds.BANNER
+import { AdsConsent, AdsConsentDebugGeography } from 'react-native-google-mobile-ads';
 
+
+const adUnitId = __DEV__?TestIds.BANNER:Platform.OS==='ios'?aps['react-native-google-mobile-ads'].ios_app_id:aps['react-native-google-mobile-ads'].android_app_id;
 
 const Stack = createNativeStackNavigator();
 
@@ -58,22 +62,59 @@ const AppWrapper = () => {
   )
 }
 
-const optionsPerPage = [2, 3, 4];
-
 
 const App = () => {
 
   const [visibleAdd, setVisibleAdd] = useState(false);
 
+  const [nonPersonalizedAds, setNonPersonalizedAds] = useState(true);
+
+
 
   useEffect(() => {
-    mobileAds()
+
+    (async function() {
+      // const consentInfo = await AdsConsent.requestInfoUpdate({
+      //   debugGeography: AdsConsentDebugGeography.EEA,
+      //   testDeviceIdentifiers: ['TEST-DEVICE-HASHED-ID'],
+      // });
+
+      const consentInfo = await AdsConsent.requestInfoUpdate();
+
+      if(consentInfo.status===AdsConsentStatus.NOT_REQUIRED||consentInfo.status===AdsConsentStatus.OBTAINED){
+        setNonPersonalizedAds(false)
+      }else if (consentInfo.isConsentFormAvailable && consentInfo.status === AdsConsentStatus.REQUIRED) {
+        const { status } = await AdsConsent.showForm();
+
+        if(status===AdsConsentStatus.OBTAINED){
+          setNonPersonalizedAds(false)
+        }
+      }
+
+
+      mobileAds()
       .initialize()
       .then(adapterStatuses => {
         // Initialization complete!
         setVisibleAdd(true)
-        console.log('complete')
+        // console.log(adapterStatuses)
+
+        // console.log('complete')
       });
+      
+
+
+  })();
+
+    // mobileAds()
+    //   .initialize()
+    //   .then(adapterStatuses => {
+    //     // Initialization complete!
+    //     setVisibleAdd(true)
+    //     console.log(adapterStatuses)
+
+    //     console.log('complete')
+    //   });
 
   }, [])
 
@@ -98,7 +139,7 @@ const App = () => {
         unitId={adUnitId}
         size={BannerAdSize.BANNER}
         requestOptions={{
-          requestNonPersonalizedAdsOnly: true,
+          requestNonPersonalizedAdsOnly: nonPersonalizedAds,
         }}
       /> 
       

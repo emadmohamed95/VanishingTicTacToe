@@ -3,6 +3,8 @@
   "displayName": "VanishingXO",
   "react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-7430681249946649~1662479885",
-    "ios_app_id": "ca-app-pub-7430681249946649~8644736926"
+    "ios_app_id": "ca-app-pub-7430681249946649~8644736926",
+    "delay_app_measurement_init": true
+
   }
 }
