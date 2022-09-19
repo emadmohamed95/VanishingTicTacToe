@@ -11,9 +11,6 @@ const Progressbar = ({settings, status, playTimer})=> {
 
     const dispatch = useDispatch()
 
-    // console.log(playTimer)
-
-
     const {
 
         remainingTime,
@@ -114,16 +111,25 @@ export const Board = ({ route, navigation }) => {
         }
     }, [mode,settings])
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if(game.status==="ON_GOING"){
-            setPlayTimer(true)
-        }else{
-            setPlayTimer(false)
-        }
-    }, [game.status])
+    //     if(game.status==="ON_GOING"){
+    //         setPlayTimer(true)
+    //     }else{
+    //         setPlayTimer(false)
+    //     }
+    // }, [game.status])
 
-    console.log(game)
+    // useEffect(() => {
+
+    //     if(visible){
+    //         setPlayTimer(false)
+    //     }else{
+    //         setPlayTimer(true)
+    //     }
+    // }, [visible])
+
+    // console.log(game)
 
     // console.log(settings)
 
@@ -188,7 +194,7 @@ export const Board = ({ route, navigation }) => {
             </View>
 
             {
-                settings.vanishMode ? <View style={styles.timerPanel}>
+                settings.vanishMode && !visible ? <View style={styles.timerPanel}>
 
 {/* <Text>{game.p1Turn?'P1':'p2'}
 </Text> */}
@@ -219,7 +225,7 @@ export const Board = ({ route, navigation }) => {
                         onPress={() => { onPress(i) }}
                     >
                         <Image
-                            style={styles.cellImg} source={cell ? cell === 'X' ? require('../../assets/bigx.png') : require('../../assets/bigo.png') : ''}
+                            style={styles.cellImg} source={cell ? cell === 'X' ? require('../../assets/bigx.png') : require('../../assets/bigo.png') : require('../../assets/empty.png')}
                         />
                         {/* <Text>{cell ? cell : ''}</Text> */}
                     </TouchableOpacity>
