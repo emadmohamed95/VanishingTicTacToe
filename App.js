@@ -20,7 +20,9 @@ import {
 import { DefaultTheme, Provider as PaperProvider, Surface } from 'react-native-paper';
 import { Board } from './src/screens/Board/Board';
 import { Provider } from "react-redux";
-import store from "./src/store/index";
+import { store, persistor } from "./src/store/index.js";
+import { PersistGate } from 'redux-persist/integration/react';
+
 import Home from './src/screens/Home/Home';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -53,11 +55,13 @@ const AppWrapper = () => {
   return (
 
     <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
       <PaperProvider theme={theme}>
         <NavigationContainer>
           <App />
         </NavigationContainer>
       </PaperProvider>
+      </PersistGate>
     </Provider>
   )
 }
