@@ -234,9 +234,9 @@ export const Board = ({ route, navigation }) => {
                 ))}
             </View>
 
-            <Image
+            {/* <Image
                 source={require('../../assets/XO.png')}
-            />
+            /> */}
 
             <EndDialog visible={visible} setVisible={setVisible} status={game ? game.status : ''} navigation={navigation} />
         </SafeAreaView>
