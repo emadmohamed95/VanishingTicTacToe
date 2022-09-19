@@ -29,12 +29,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Settings from './src/screens/Settings/Settings';
 import mobileAds, { AdsConsentStatus } from 'react-native-google-mobile-ads';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
-import aps from './app.json'
-
-import { AdsConsent, AdsConsentDebugGeography } from 'react-native-google-mobile-ads';
+import { AdsConsent } from 'react-native-google-mobile-ads';
 
 
-const adUnitId = __DEV__?TestIds.BANNER:Platform.OS==='ios'?aps['react-native-google-mobile-ads'].ios_app_id:aps['react-native-google-mobile-ads'].android_app_id;
+const adUnitId = __DEV__?TestIds.BANNER:Platform.OS==='ios'?'ca-app-pub-7430681249946649/1559036517':'ca-app-pub-7430681249946649/5833053948';
 
 const Stack = createNativeStackNavigator();
 
