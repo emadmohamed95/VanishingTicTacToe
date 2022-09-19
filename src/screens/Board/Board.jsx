@@ -344,7 +344,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
-        // backgroundColor:'transparent'
+        backgroundColor:'#eee8f4',
+        // background: 'linear-gradient(0deg, rgba(103, 80, 164, 0.11), rgba(103, 80, 164, 0.11)), #FFFBFE',
         // opacity:0.8
 
 
