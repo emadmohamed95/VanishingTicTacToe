@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     board: {
         display: 'flex',
         // height: '100%',
-        width: '100%',
+        width: 306,
         // alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
